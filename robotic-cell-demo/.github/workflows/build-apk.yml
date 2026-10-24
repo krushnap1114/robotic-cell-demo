@@ -1,17 +1,20 @@
 name: Build Android APK
 
 on:
-  workflow_dispatch:        # lets you press "Run workflow" by hand
+  workflow_dispatch:
   push:
     branches: [main, master]
 
 permissions:
-  contents: write           # needed to publish the APK on the Releases page
+  contents: write
 
 jobs:
   apk:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: robotic-cell-demo
     steps:
       - name: Get the code
         uses: actions/checkout@v4
@@ -45,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: robotic-cell-demo-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: robotic-cell-demo/build/app/outputs/flutter-apk/app-release.apk
 
       - name: Publish the APK on the Releases page
         uses: softprops/action-gh-release@v2
@@ -53,5 +56,4 @@ jobs:
           tag_name: demo-${{ github.run_number }}
           name: Robotic Cell I/O demo (build ${{ github.run_number }})
           body: Demo app with simulated data only. Download app-release.apk on your Android phone and open it.
-          files: build/app/outputs/flutter-apk/app-release.apk
-
+          files: robotic-cell-demo/build/app/outputs/flutter-apk/app-release.apk
