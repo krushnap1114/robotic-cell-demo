@@ -1,0 +1,6 @@
+# Keep the analyzer quiet about the newest-Flutter deprecation notices so the
+# same code analyses cleanly on older and newer Flutter versions.
+analyzer:
+  errors:
+    deprecated_member_use: ignore
+    deprecated_member_use_from_same_package: ignore
